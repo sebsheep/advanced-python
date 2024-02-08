@@ -1,0 +1,27 @@
+[
+  {
+    "question": "What is the velocity of a swallow carrying a coconut?",
+    "answers": [
+      "A swallow cannot hold a coconut",
+      "50 mph",
+      "Is it an Asian or African swallow?",
+      "I don't know that!"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "How many times do you need to fold a paper sheet such that it reaches the top of Eiffel's tower?",
+    "answers": ["10", "23", "103", "1303"],
+    "correct": 1
+  },
+  {
+    "question": "What did inspire Guido van Rossum (Python's original author) to name of the Python programming language?",
+    "answers": [
+      "Guido is a big fan of The Monty Python, an English comedy group",
+      "Guido is a big fan of snakes",
+      "Because we can write recursive functions in Python, like a snake biting its tail",
+      "Guido randomly chose a name in the dictionary"
+    ],
+    "correct": 0
+  }
+]
