@@ -4,7 +4,7 @@ Let's be precise to deeply understand Python!
 
 ## Python 2 vs 3
 
-Today, new projects are all written in Python3.
+Today, new projects are all written in Python3. Begining 2024, Python3.7 is not maintained anymore, and the last version is 3.12.
 
 Python2 is not maintained anymore.... BUT, still millions of LoC
 running on it!
@@ -14,7 +14,21 @@ running on it!
 - bool: True or False!
 - int: illimited precision integers
 - float: standard 64 bit float.
-- str: "Hello"
+- str: `"Hello"` or `'Hello'`. Multilines options:
+  ```python
+   """Hello
+   World"""
+  ```
+  or
+  ```python
+  '''Hello
+  World'''
+  ```
+  **Note:** string interpolation with f-strings (most practical method):
+  ```python
+  name = "Seb"
+  say_hi = f"Welcome {name}"
+  ```
 - bytes: a binary string (e.g. when reading a file)
 - None: a special value, can be used as "null pointer" or "No value"
 
@@ -186,8 +200,6 @@ python3 execution-flow/1.py
 
 ### Lists
 
-Lists are mutable!
-
 ```python
 l = [1, "Hello", 5]
 print(l[0]) # 1
@@ -208,6 +220,27 @@ for element in l:
 
 ```
 
+Even if lists can be heterogeneous, most of the time it is used as a "collection"
+of similar objects (list of users, list of articles in a cart, ...).
+
+**Note**: we can build we can build lists using a list comprehension:
+
+```python
+numbers = [1, 5, 2]
+doubles = [number*2 for number in numbers] # [2, 10, 4]
+```
+
+This avantagely replaces the equivalent code:
+
+```python
+numbers = [1, 5, 2]
+doubles = []
+for number in numbers:
+    doubles.append(number*2)
+```
+
+Do the **exercise** in `0-exercises/list-comprehension.py`. Just `python3 list-comprehension.py` to run the tests.
+
 More on lists later!
 
 ### Tuples
@@ -220,6 +253,19 @@ print(l[0]) # 1
 print(l[1]) # "Hello"
 
 l[3] = 58 # Exception !
+```
+
+Tuples are intended to store multiple values of different types and meaning. For
+example, we could represent a user with:
+
+```python
+person = ("Seb", 42, "Paris")
+
+# Note you can destructure a tuple:
+(name, age, city) = person
+
+# and use the left hand side variables:
+print(name, "is", age, "years old and live in", city)
 ```
 
 ### Dictionary
@@ -275,6 +321,8 @@ userAges["Jessie"] = 36
 userAges["John"] = 15
 ```
 
+**Note**: we can use a dict an indexed database because the "get" operation (`userAges["John"]` executes in constant time, regardless of the size of the dict).
+
 The values don't have to be of the same type, so you can also use a dictionnary
 to structure your data (even if there are better ways to do this,
 as we'll see later in the course):
@@ -311,6 +359,24 @@ users = {
 Actually, keys can be a really large range of types: int, string, tuples, ... But no mutable ones like lists. To be more precise, the keys has to be "hashable",
 more on that later.
 
+There also is a dict comprehension syntax:
+
+```python
+numbers = [1, 5, 2]
+doubles = {number: number*2 for number in numbers} # {1: 2, 5: 10, 2: 4}
+```
+
+which replaces the following code:
+
+```python
+numbers = [1, 5, 2]
+doubles = {}
+for number in numbers:
+    doubles[number] = number * 2
+```
+
+Do the `0-exercises/dict-comprehension.py` exercise.
+
 > **Note:** you maybe noticed that the last element in a multiline list or
 > dict has a trailing comma like in (after `"Paris"`):
 >
@@ -344,6 +410,41 @@ python3 main.py
 
 it will print an error, it's normal, you have to fix it!
 
-Fix all the errors to have a functionning program.
+Here is an expected execution of the program (note that the score is correctly computed):
+
+```
+
+What is the velocity of a swallow carrying a coconut?
+
+1. A swallow cannot hold a coconut
+2. 50 mph
+3. Is it an Asian or African swallow?
+4. I don't know that!
+Choose your answer (1 to 4): 3
+
+How many times do you need to fold a paper sheet such that it reaches the top of Eiffel's tower?
+
+1. 10
+2. 23
+3. 103
+4. 1303
+Choose your answer (1 to 4): 2
+
+What did inspire Guido van Rossum (Python's original author) to name of the Python programming language?
+
+1. Guido is a big fan of The Monty Python, an English comedy group
+2. Guido is a big fan of snakes
+3. Because we can write recursive functions in Python, like a snake biting its tail
+4. Guido randomly chose a name in the dictionary
+Choose your answer (1 to 4): 4
+Your score is 2/3!
+```
+
+Fix all the errors to have a functionning program!
 
 ### Join with dicts
+
+We'll illustrate here how convinient it is to use dicts as an "index" to quickly
+find data.
+
+Look at the `join.py` file and fulfill the `join_people` definition.
