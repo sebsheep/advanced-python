@@ -11,7 +11,7 @@ def join_people(people, cities):
     #           this function?
 
     # Note: "pass" is Python keyword to indicate there is nothing
-    # to do in the block
+    # to do in the block. You have to remove it when solving this exercise.
     pass
 
 

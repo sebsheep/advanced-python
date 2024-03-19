@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Self
 
 
 @dataclass
@@ -9,12 +8,12 @@ class Stock:
     marmelade_jars: int
 
     @property
-    def total_count(self):
+    def total_count(self) -> int:
         "dataclass is a 'normal', you can add methods to it"
         return self.apples + self.breads + self.marmelade_jars
 
 
-def example():
+def example() -> None:
     # building like a "normal" class
     # we could use positional arguments but for clarity it is
     # usually prefered to use named arguments to build dataclasses.
@@ -34,7 +33,7 @@ def example():
 example()
 
 
-def test_merge_stocks():
+def test_merge_stocks() -> None:
 
     cargo_bike = Stock(apples=3, breads=20, marmelade_jars=10)
     warehouse = Stock(apples=1052, breads=304, marmelade_jars=510)

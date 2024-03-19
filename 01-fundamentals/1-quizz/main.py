@@ -1,4 +1,5 @@
 import json
+import sys
 
 
 def main():
@@ -12,11 +13,15 @@ def load_questions():
         file = open("questions.json")
     except:
         print("Oops, the questions.json file seems missing")
+        sys.exit(-1)
 
     try:
         questions = json.load(file)
     except:
         print("Oops, the questions.json file doesn't seem to be in json format")
+        sys.exit(-1)
+
+    file.close()
 
     return questions
 
@@ -51,21 +56,27 @@ def play_question(question):
 
 
 def ask_answer(max_answer):
-    user_answer_ok = False
-    while not user_answer_ok:
+    user_final_answer = None
+    while user_final_answer is None:
         user_answer_string = input(f"Choose your answer (1 to {max_answer}): ")
         try:
             user_answer_int = int(user_answer_string)
         except:
-            # user_anwser_ok will stay False, so the while
+            # user_final_answer will stay None, so the while
             # loop condition holds.
             print(f"Illegal input!")
             continue
 
         if 1 <= user_answer_int <= max_answer:
-            user_answer_ok = True
+            user_final_answer = user_answer_int
         else:
             print(f"Illegal input!")
+
+
+def f(a: bool) -> int:
+    if a:
+        b = 1
+    return b
 
 
 if __name__ == "__main__":

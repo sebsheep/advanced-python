@@ -30,7 +30,7 @@ monster_names = [
 score = 0
 
 
-def user_choice(question, choices):
+def user_choice(question: str, choices: list[str]) -> str:
     response = input(question)
     while response not in choices:
         print("Your choice must be one of the following:")
@@ -55,7 +55,7 @@ while not player.is_dead():
         )
         print(f"You have {player.health} health points.")
         print("What do you want to do?")
-        response = user_choice("1) Attack \t 2) Heal :", ("1", "2"))
+        response = user_choice("1) Attack \t 2) Heal :", ["1", "2"])
         if response == "1":
             player.attack(monster)
             print(f"You deal {player.damage} damage to {monster.name}.")

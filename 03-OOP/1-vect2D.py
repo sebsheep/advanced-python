@@ -1,5 +1,4 @@
 import math
-from typing import Self
 
 
 class Vect2D:
@@ -15,7 +14,7 @@ class Vect2D:
         """
         return math.sqrt(self.x**2 + self.y**2)
 
-    def dot(self, other: Self) -> float:
+    def dot(self, other: "Vect2D") -> float:
         """'Classical' method with one argument computing the dot product.
         Here the argument is of the type of the class we are defining, hence
         we must use `Self` for typing. It can be called like:
@@ -40,19 +39,16 @@ class Vect2D:
         """
         return f"[| x = {self.x}; y = {self.y} |]"
 
-    def __add__(self, other: Self) -> Self:
+    def __add__(self, other: "Vect2D") -> "Vect2D":
         """'Magic' method called when 2 Vect2D are added
         >>> v1 = Vect2D(3, 4)
         >>> v2 = Vect2D(1, 2)
         >>> print(v1 + v2)
         [| x = 4; y = 6 |]
         """
-        # We could do `Vect2D(self.x + other.x, self.y + other.y)`
-        # but mypy doesn't know Vect2D at this stage... So we have to
-        # cheat a beat to build the new vector and still type check;
-        return type(self)(self.x + other.x, self.y + other.y)
+        return Vect2D(self.x + other.x, self.y + other.y)
 
-    def __sub__(self, other: Self) -> Self:
+    def __sub__(self, other: "Vect2D") -> "Vect2D":
         """Vector substraction
         >>> v1 = Vect2D(3, 4)
         >>> v2 = Vect2D(1, 3)
@@ -62,7 +58,7 @@ class Vect2D:
         # TODO!
         pass
 
-    def __mul__(self, scale: float | int) -> Self:
+    def __mul__(self, scale: float | int) -> "Vect2D":
         """Vector multiplication by a number, the number being on the right,
         the vector on the left.
 
@@ -75,7 +71,7 @@ class Vect2D:
         # TODO!
         pass
 
-    def __rmul__(self, scale: float | int) -> Self:
+    def __rmul__(self, scale: float | int) -> "Vect2D":
         """Vector multiplication by a number, the number being on the left,
         the vector on the right (hence `rmul`).
             >>> v1 = Vect2D(3, 4)

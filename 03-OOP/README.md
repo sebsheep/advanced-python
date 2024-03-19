@@ -30,7 +30,8 @@ python3 -m doctest 1-vect2D.py
 ```
 
 You only see failing tests.
-You can add the verbose mode `-v` if you want to see all the tests:
+You can add the verbose mode `-v` if you want to see all the tests
+(_note you can run the code even if it doesn't type check!_):
 
 ```
 python3 -m doctest -v 1-vect2D.py
@@ -42,6 +43,18 @@ plus, it is hard building complex tests with this framework (other tests framewo
 > Hey, some tests are failing!
 
 Yeah, that's true. Will you understand what you have to do?
+
+> **Important note:** the body of the `__add__` method only check the type of the
+> `other` argument at "compile" time. If you are writing a public library, you'd also
+> add this test at "runtime" because all users won't necessarily check their code with
+> mypy. This test would look like this:
+>
+> ```python
+> def __add__(self, other: Self) -> Self:
+>     if not isinstance(other, Vect2D):
+>         raise ValueError(f"Cannot add a `Vect2D` with a {type(other)}")
+>     return type(self)(self.x + other.x, self.y + other.y)
+> ```
 
 ## Role Play
 
@@ -85,7 +98,8 @@ You notice the game only miss one element to match this description: weapons.
   you can use `choice(weapons)` to randomly pick a weapon when building the
   character.
 
-That's it! Now the description is accurate!
+That's it! Now the description of the game is accurate! ... What, you disagree?
+Be careful, I'm looking at you!
 
 **Important Note:** as you can see, this `@property` mechnamism allows to
 easily change an attribute into a "method" without changing the users of the
@@ -96,7 +110,7 @@ on the internet, it's about the same complexity).
 
 ## Stocks
 
-A new logistic company delivering breakfast thanks to cargo bike need a
+A new logistic company delivering breakfast thanks to cargo bike needs a
 piece of software to handle stocks. They especially need a way to "merge"
 multiple stocks, for example when a cargo bike arrives at the warehouse, we
 need to add all the content of the cargo bike in the warehouse.
@@ -122,3 +136,16 @@ and make the signature of `join` be:
 ```python
 def join_people(people: list[Person], cities: list[City]) -> PersonWithCity
 ```
+
+## What did we learn?
+
+- Declare a class with the `class` keyword and the special
+  `__init__` method.
+- Instanciate an object of a class.
+- Instance methods all take `self` as the first argument (which is
+  the equivalent of `this` in Java/C++).
+- Declare special methods like `__add__` to overload operators for
+  objects of the class.
+- `doctest` provides a simple way to document and test our programs.
+- Game descriptions on the boxes can be a huge lie!
+- We can use `@dataclass` to easily describe the fields of a class.

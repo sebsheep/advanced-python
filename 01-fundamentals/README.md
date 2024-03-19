@@ -4,7 +4,7 @@ Let's be precise to deeply understand Python!
 
 ## Python 2 vs 3
 
-Today, new projects are all written in Python3. Begining 2024, Python3.7 is not maintained anymore, and the last version is 3.12.
+Today, new projects are all written in Python3. Starting 2024, Python3.7 is not maintained anymore, and the last version is 3.12.
 
 Python2 is not maintained anymore.... BUT, still millions of LoC
 running on it!
@@ -37,7 +37,7 @@ Know the type of an expression:
 - type(5)
 - type("hello")
 
-Conversions :
+Conversions to int:
 
 - int("56") == 56
 - int("hello") ---> Exception
@@ -45,6 +45,8 @@ Conversions :
 - int(True) == 1
 - int(False) == 0
 - int(None) --> Exception
+
+Conversions to string:
 
 - str(45) == "45"
 - str(True) == "True"
@@ -60,7 +62,7 @@ Conversions :
 - bool("a") == True
 - bool(None) == False
 
---> all values convert to True except "empty" ones (like 0, empty string,...)
+--> all values converted to True except "empty" ones (like 0, empty string, empty list,...)
 
 ## Truthiness value
 
@@ -90,29 +92,31 @@ It is used a lot to test if a **string** is empty:
 ```python
 user_input = input("Enter your name")
 # note that user_input is a string!
-if user_input:
+if not user_input:
    print("Name is empty!!")
+else:
+    print("Hello", user_input)
 ```
 
 So for strings, the snippet above is equivalent to:
 
 ```python
 user_input = input("Enter your name")
-if user_input != "":
+if user_input == "":
     print("Name is empty!!")
 else:
     print("Hello", user_input)
 ```
 
-We can also used it for integers (maybe it's preferable to use an explicit `grade == 0` test here
-for clarity):
+We can also used it for integers (maybe it's preferable to use an
+explicit `grade == 0` test here for clarity):
 
 ```python
 grade = 0
 if grade:
-    print("oh no! your grade is 0")
+    print("your grade is not 0")
 else:
-    print("your grade is greater than 0")
+    print("oh no! your grade is 0")
 ```
 
 > **Note:** a value `x` such that `bool(x) == True` is said _truthy_.
@@ -180,15 +184,13 @@ It is the case with `print`:
 m = print("Hello") # m is None
 ```
 
-## Execution flow
+## Interpretation flow
 
 Python is dynamically interpreted, one line being interpreted after the other
 one.
 
-Does the following code work?
-
 Look at the python files in `execution-flow/` and try to predict
-the behavior when executed.
+the behavior when executed (what is displayed, what error is raised...).
 
 Then execute the file with the following command:
 
@@ -223,7 +225,7 @@ for element in l:
 Even if lists can be heterogeneous, most of the time it is used as a "collection"
 of similar objects (list of users, list of articles in a cart, ...).
 
-**Note**: we can build we can build lists using a list comprehension:
+**Comprehension**: we can build lists using a list comprehension:
 
 ```python
 numbers = [1, 5, 2]
@@ -239,7 +241,8 @@ for number in numbers:
     doubles.append(number*2)
 ```
 
-Do the **exercise** in `0-exercises/list-comprehension.py`. Just `python3 list-comprehension.py` to run the tests.
+Do the **exercise** in `0-exercises/list-comprehension.py`. Just run
+`python3 list-comprehension.py` to launch the tests.
 
 More on lists later!
 
@@ -248,18 +251,22 @@ More on lists later!
 Tuples are really similar as lists but immutable!
 
 ```python
-l = (1, "Hello", 5)
-print(l[0]) # 1
-print(l[1]) # "Hello"
+t = (1, "Hello", 5)
+print(t[0]) # 1
+print(t[1]) # "Hello"
 
-l[3] = 58 # Exception !
+t[3] = 58 # Exception !
 ```
 
-Tuples are intended to store multiple values of different types and meaning. For
+Tuples are intended to store multiple values of different types and meaning (compare to
+lists which are more used with homogeneous types). For
 example, we could represent a user with:
 
 ```python
 person = ("Seb", 42, "Paris")
+
+# You can access tuple elements by indexing
+print(person[0], "is", person[1], "years old and live in", person[2])
 
 # Note you can destructure a tuple:
 (name, age, city) = person
@@ -270,7 +277,7 @@ print(name, "is", age, "years old and live in", city)
 
 ### Dictionary
 
-Key/Value Association. Most of the time, keys are string or integers.
+Key/Value Association. Most of the time, keys are strings or integers.
 
 You can use a dictionary as a kind of indexed database. E.g. here we store
 the age of the user:
@@ -286,7 +293,7 @@ userAges = {
 
 # Access:
 userAges["John"] # 20
-userAges["Jessie"] # Exception
+userAges["Jessie"] # Exception, Jessie doesn't exist in this dict
 
 userAges.get("John") # 20
 userAges.get("Jessie") # None
@@ -298,7 +305,7 @@ for name in userAges:
     print(name)
 
 
-# /!\ The order is preserved, but it's an implementation
+# /!\ The insertion order is preserved, but it's an implementation
 # /!\ detail and could change in next versions of Python!
 
 # iterate on key and value at the same time
@@ -323,8 +330,8 @@ userAges["John"] = 15
 
 **Note**: we can use a dict an indexed database because the "get" operation (`userAges["John"]` executes in constant time, regardless of the size of the dict).
 
-The values don't have to be of the same type, so you can also use a dictionnary
-to structure your data (even if there are better ways to do this,
+The values don't have to be of the same type (neither the keys!), so you can also use a
+dictionnary to structure your data (even if there are better ways to do this,
 as we'll see later in the course):
 
 ```python
@@ -335,10 +342,10 @@ person = {
 }
 ```
 
-You can perform the same kind of operations described above, but iterate on
+You can perform the same kind of operations described above, but iterating on
 a person doesn't seem to make a lot of sense.
 
-You can even nest dictionnaries to combine both approaches (here the key of the
+You can even nest dictionnaries and combine both approaches (here the key of the
 top level dictionnary could be UID from the DB):
 
 ```python
@@ -448,3 +455,15 @@ We'll illustrate here how convinient it is to use dicts as an "index" to quickly
 find data.
 
 Look at the `join.py` file and fulfill the `join_people` definition.
+
+## What did we learn?
+
+- Python basic types and conversions
+- Truthiness value (truthy/falsy)
+- Function (optional) arguments. Call functions by naming arguments
+- Function without return statement
+- Interpretation flow
+- Lists, list comprehension, read/write, `.append`, `.pop`, iteration
+- Tuples, tuple destructuration
+- Dictionaries, dict comprehension, use as DB or to structure data,
+  iteration on the keys/the values/both, nest dicts.
