@@ -7,7 +7,7 @@ def compute_lengths(strings):
 def test_compute_lengths():
     assert compute_lengths([]) == []
     assert compute_lengths(["Hello", "world"]) == [5, 5]
-    assert compute_lengths(["I", "am", "Lord", "Voldemort"] == [1, 2, 4, 9])
+    assert compute_lengths(["I", "am", "Lord", "Voldemort"]) == [1, 2, 4, 9]
     print("test_compute_lengths passed!")
 
 
