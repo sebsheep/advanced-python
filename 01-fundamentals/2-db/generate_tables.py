@@ -566,7 +566,11 @@ def generate_random_tables(num_people):
     # Generate random samples for table2 (Cities table)
     cities_table = []
     for idx, (city, country) in enumerate(cities_and_countries):
-        city_row = {"city_id": idx + 1, "city": city, "country": country}
+        city_row = {
+            "city_id": idx + 1,
+            "city": city.encode("utf-8"),
+            "country": country.encode("utf-8"),
+        }
         cities_table.append(city_row)
 
     return table1, cities_table
