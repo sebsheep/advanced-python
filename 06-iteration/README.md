@@ -198,7 +198,7 @@ Here is a way to build iterator objects: `Generator`s.
    Try to predict what will be printed. Run the file with:
 
    ```
-   python3 05-iteration/1-names.py
+   python3 06-iteration/1-names.py
    ```
 
    Before uncommenting the `# example2()` line, answer those questions:
@@ -262,23 +262,27 @@ Here is a way to build iterator objects: `Generator`s.
    >
    > which is pretty elegant from my point of view!
 
-6. Look at `5-big-sum.py`. What is the difference between `s1` and `s2`?
+6. Look at `4-big-sum.py`. What is the difference between `s1` and `s2`?
 
-   > **/!\\ WARNING /!\\**
+   > **⚠️ WARNING ⚠️**
    >
    > This program will use a lot of memory, I recommend to close other non related
-   > programs before running it to prevent a freeze, especially if you have less than 32GB
-   > of RAM.
+   > programs before running it to prevent a freeze, especially if you have less > than 32GB of RAM.
    >
-   > **/!\\ WARNING /!\\**
-   > Open 2 terminals side by side, run `top` in the left one to see memory and CPU usage.
-   > In the right one, run `python3 4-big-sum.py`. CPU used by this program should be around
-   > 100%.
+   > If you know you are short in RAM, you can reduce the value of `N`.
+   >
+   > **⚠️ WARNING ⚠️**
 
-   Observe the memory usage when the program computes `s1` (before `s1 computed` is
-   displated) and when the program computes `s2` (after `s1 computed` is displayed).
-   What is the most memory efficient method? What do we need to allocate for `s1`? And
-   for `s2`?
+   Open 2 terminals side by side, run `top` in the left one to see memory and
+   CPU usage. In the right one, run `python3 4-big-sum.py`. CPU used by this
+   program should be around 100%.
+
+   Observe the memory usage when the program computes `s1` (before `s1 computed`
+   is displated) and when the program computes `s2` (after `s1 computed` is
+   displayed).
+
+   What is the most memory efficient method? What do we need to allocate for
+   `s1`? And for `s2`?
 
 ## Generators tradeoff
 
@@ -286,9 +290,9 @@ The main advantage of generator is its ability to _stream_ huge amount of data
 without allocating memory (compared to an alternative where we should have
 stored all data in a list).
 
-The downside is that a generator has a "state" and can be read only once, which can
-lead to sneaky bugs as soon as we try to read them twice, like we'd do with simple
-list.
+The downside is that a generator has a "state" and can be read only once, which
+can lead to sneaky bugs as soon as we try to read them twice, like we'd do with
+simple list.
 
 Hence, using generators is an **optimisation**, sacrifying code robustness for
 performance. As for all optimisations, keep the following quote (from Dijkstra)
@@ -299,27 +303,87 @@ in mind:
 So your strategy should be:
 
 - use a simple list _by default_,
-- _if_ you have memory issues, switch to a generator.
+- _if_ you have memory issues, try out a generator. Only keep this solution
+  if the memory issue is solved.
 
-Such memory issues typically arise when reading huge files: if you load all the files in
-memory, you'll probably staturate the RAM. Instead if you process those files line per
-line or so, it'll be probably fine!
+Such memory issues typically arise when reading huge files: if you load all the
+file in memory, you'll probably staturate the RAM. Instead if you process those
+files line per line or so, it'll be probably fine!
 
-**Exercise**: to experiment with this idea, complete out the `read_by_chunk` function in
-`process_lage_file.py`. Run the script to see the number of e in this `README` (you never
-wanted to know that, now you know).
+**Exercise**: to experiment with this idea, complete out the `read_by_chunk`
+function in `process_lage_file.py`. Run the script to see the number of "e" in
+this `README` (you never wanted to know that, now you know).
 
-**Note:** from a memory point of view, generators clearly wins the game against lists.
-For the computing time:
+**Note:** from a memory point of view, generators clearly wins the game against
+lists. For the computing time:
 
 - using a generator implies a little computation overhead over a list version,
 - however, we're saving the time needed for allocation
 
-As a result, generator versions can be **slower or faster** than their list equivalent
-depending of a lot of factor. Hence, optimising CPU time shouldn't be the main goal when
-choosing a generator.
+As a result, generator versions can be **slower or faster** than their list
+equivalent depending of a lot of factor. Hence, optimising CPU time shouldn't be
+he main goal when choosing a generator.
 
-## Writing you own iterable
+## (Optional) Compose iterables
+
+We often need to "compose" iterables in some ways. The simplest "composition" is
+maybe to "chain" iterables: that is, given 2 iterables, iterate on the first one
+and then on the second one.
+
+The standard library `itertools` contains a lot of such tools. E.g, the 
+following code displays `42`, `4`, `0` then `1`:
+
+```python
+from itertools import chain
+
+for i in chain([42, 4], range(2)):
+  print(i)
+```
+
+To get used with composing iterables, do the exercise `custom_itertools.py`
+which re-implement some of the functions in the `itertools` module (read the note
+below before starting!).
+
+> **Note**: a function can take a variable numbers of arguments with the `*args` syntax (you
+> can use any other variable you want instead of `args`) . In the body of the function
+> `args` is a tuple and you can iterate on it:
+>
+> ```python
+> def f(*args):
+>     for arg in args:
+>         print(arg)
+> ```
+>
+> You can then call `f` with : `f(1)` or `f(1, 2)` or even `f(42, 58, 9, 10, 32)`.
+>
+> If you have `data` list and you want to pass the elements as arguments, you can use the `*data` syntax:
+>
+> ```python
+> data = [1, 4, 8]
+> f(*data)
+> ```
+>
+> For example, it works with `print`:
+>
+> ```python
+> print(*data)
+> ```
+>
+> Note the `*data` works lists but also for any iterable. So you could do:
+>
+> ```python
+> print(*range(10))
+> print(*chain([42, 4], range(2)))
+> ```
+>
+> For type annotation, you should use the type of the items, e.g. if `f` can take
+> a variable number of integers, you would use:
+>
+> ```python
+> def f(*args: int): ...
+> ```
+
+## (Optional) Writing you own iterable
 
 Let's settle the things once again:
 
@@ -373,5 +437,5 @@ use any generator or `for` loop.
 - _Generator expressions_ are a concise way to write generators, with a syntax similar to
   the syntax of list comprehension.
 - Generators can stream a huge of data with low memory footprint.
-- We can define custom iterators by implementing the `__iter__` and `__next__` magic
-  methods. This should be quite rare.
+- (Optional) We can define custom iterators by implementing the `__iter__` and
+  `__next__` magic methods. This should be quite rare.

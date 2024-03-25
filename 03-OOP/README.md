@@ -137,6 +137,17 @@ and make the signature of `join` be:
 def join_people(people: list[Person], cities: list[City]) -> PersonWithCity
 ```
 
+## Short introduction to Numpy
+
+Numpy is a Python library aiming to provide fast calculation over arrays.
+It uses operator overloading a lot to give concise solutions at difficult
+problems.
+
+Performance is reached thanks to the use of native C code on the arrays (instead
+of Python which has really poor performances).
+
+Look at `5-numpy.py` and read the comments/execute the code/solve the exercise.
+
 ## What did we learn?
 
 - Declare a class with the `class` keyword and the special
@@ -148,4 +159,8 @@ def join_people(people: list[Person], cities: list[City]) -> PersonWithCity
   objects of the class.
 - `doctest` provides a simple way to document and test our programs.
 - Game descriptions on the boxes can be a huge lie!
+- The `@property` decorator makes getter/setter pattern useless.
 - We can use `@dataclass` to easily describe the fields of a class.
+- Numpy arrays are Python objects backed by a performant C implementation.
+- Numpy internally uses special methods like `__add__` and `__str__` a lot
+  to provide a smooth experience.

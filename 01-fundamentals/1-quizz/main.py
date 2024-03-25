@@ -73,11 +73,5 @@ def ask_answer(max_answer):
             print(f"Illegal input!")
 
 
-def f(a: bool) -> int:
-    if a:
-        b = 1
-    return b
-
-
 if __name__ == "__main__":
     main()
