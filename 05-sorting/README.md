@@ -453,6 +453,7 @@ class EcoTrip:
     min_age: int
     place: str
     promoted: bool
+
 eco_trip = [
     EcoTrip(
         start_date=datetime.datetime(2025, 3, 5, 0, 0),
@@ -663,3 +664,15 @@ Here is the order of the places you should have:
     "Winter Camping, Maine",
 ]
 ```
+
+## What did we learn?
+
+- We can sort a list with the `.sort` method which mutates the list.
+- We can have a new list sorted with the `sorted` function (the initial list
+  is not modified)
+- Both `.sort` and `sorted` have `reverse` and `key` arguments.
+- `key` should be a function, we can use `lambda` keyword to create anonymous
+  functions.
+- Tuples and lists can be compared respecting to the _lexicographic order_.
+- We can elegantly combine the tuple comparison and the `key` argument to
+  sort list depending on multiple criteria.
